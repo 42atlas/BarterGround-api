@@ -15,7 +15,13 @@ export const createPost = asyncHandler(async (req, res) => {
     category,
     user: { _id: author },
   } = req;
-  let newPost = await Post.create({ ...body, title, image, category, author });
+  let newPost = await Post.create({
+    ...body,
+    ...title,
+    ...image,
+    ...category,
+    author,
+  });
   newPost = await newPost.populate("author");
   res.status(201).json(newPost);
 });
@@ -68,4 +74,21 @@ export const deletePost = asyncHandler(async (req, res) => {
   found.des;
   await Post.deleteOne({ _id: id });
   res.json({ success: `Post with id of ${id} was deleted` });
+});
+
+export const listPost = asyncHandler(async (req, res) => {
+  const {
+    isListed,
+    params: { id },
+    user: { _id: userId },
+  } = req;
+  const found = await Post.findById(id);
+  if (!found)
+    throw new ErrorResponse(`Post with id of ${id} doesn't exist`, 404);
+  if (found.author.toString() !== userId.toString())
+    throw new ErrorResponse(`Only the owner of the post can list`, 403);
+  const listedPost = await Post.findOneAndUpdate({ _id: id }, isListed, {
+    new: true,
+  });
+  res.json(listedPost);
 });

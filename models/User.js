@@ -9,7 +9,7 @@ const userSchema = new Schema({
     required: [true, "Password is required"],
     select: false,
   },
-  character: { type: String, required: [true, "Email is required"] },
+  character: { type: String, required: [true, "Character is required"] },
 });
 
 export default model("User", userSchema);

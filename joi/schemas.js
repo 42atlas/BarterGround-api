@@ -5,6 +5,7 @@ export const post = Joi.object({
   image: Joi.string().required(),
   body: Joi.string().required(),
   category: Joi.string().required(),
+  islisted: Joi.boolean(),
 });
 
 export const signUp = Joi.object({

@@ -12,6 +12,7 @@ const postSchema = new Schema({
   body: { type: String, required: [true, "Body is required"] },
   date: { type: Date, default: Date.now },
   category: { type: String, required: [true, "Category is required"] },
+  isListed: { type: String },
 });
 
 export default model("Post", postSchema);
