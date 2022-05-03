@@ -1,0 +1,46 @@
+import "./db/index.js";
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import postsRouter from "./routes/postsRouter.js";
+import authRouter from "./routes/authRouter.js";
+import errorHandler from "./middlewares/errorHandler.js";
+/* import sessionAuth from "./routes/sessionAuth.js"; */
+
+const Multer = require("multer");
+const FirebaseStorage = require("multer-firebase-storage");
+
+//file upload
+const fileUpload = Multer({
+  storage: FirebaseStorage({
+    bucketName: process.env.BUCKET_NAME,
+    credentials: {
+      clientEmail: process.env.CLIENT_MAIL,
+      privateKey: process.env.PRIVATE_KEY,
+      projectId: process.env.PROJECT_ID,
+    },
+  }),
+});
+
+//
+const app = express();
+const port = process.env.PORT || 5000;
+
+process.env.NODE_ENV !== "production" && app.use(morgan("dev"));
+
+//file upload
+app.post("/file", fileUpload.single("file"), (req, res) => {
+  res.status(201).json(req.file);
+});
+//----
+app.use(cors({ origin: "*" }));
+app.use(express.json());
+/* app.use("/session-auth", sessionAuth); */
+app.use("/auth", authRouter);
+app.use("/posts", postsRouter);
+app.use("*", (req, res) => res.sendStatus(404));
+app.use(errorHandler);
+
+app.listen(port, () =>
+  console.log(`Server is running at http://localhost:${port}`)
+);
