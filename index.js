@@ -6,33 +6,33 @@ import postsRouter from "./routes/postsRouter.js";
 import authRouter from "./routes/authRouter.js";
 import errorHandler from "./middlewares/errorHandler.js";
 /* import sessionAuth from "./routes/sessionAuth.js"; */
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 
-const Multer = require("multer");
-const FirebaseStorage = require("multer-firebase-storage");
+// Set the configuration for your app
+// TODO: Replace with your app's config object
+const firebaseConfig = {
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL,
+  storageBucket: process.env.STORAGE_BUCKET
+};
+const firebaseApp = initializeApp(firebaseConfig);
 
-//file upload
-const fileUpload = Multer({
-  storage: FirebaseStorage({
-    bucketName: process.env.BUCKET_NAME,
-    credentials: {
-      clientEmail: process.env.CLIENT_MAIL,
-      privateKey: process.env.PRIVATE_KEY,
-      projectId: process.env.PROJECT_ID,
-    },
-  }),
-});
+// Get a reference to the storage service, which is used to create references in your storage bucket
+const storage = getStorage(firebaseApp);
 
-//
+
 const app = express();
 const port = process.env.PORT || 5000;
 
 process.env.NODE_ENV !== "production" && app.use(morgan("dev"));
 
 //file upload
-app.post("/file", fileUpload.single("file"), (req, res) => {
+/* app.post("/file", fileUpload.single("file"), (req, res) => {
   res.status(201).json(req.file);
-});
-//----
+}); */
+//
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 /* app.use("/session-auth", sessionAuth); */

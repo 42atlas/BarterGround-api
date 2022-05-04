@@ -4,8 +4,8 @@ export const post = Joi.object({
   title: Joi.string().required(),
   image: Joi.string().required(),
   body: Joi.string().required(),
-  category: Joi.string().required(),
-  islisted: Joi.boolean(),
+  category: Joi.string().valid('tech', 'phones').required(),
+  isListed: Joi.boolean(),
 });
 
 export const signUp = Joi.object({

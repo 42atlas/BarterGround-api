@@ -5,7 +5,6 @@ import {
   getAllPosts,
   getSinglePost,
   updatePost,
-  listPost,
 } from "../controllers/posts.js";
 import validateJOI from "../middlewares/validateJOI.js";
 import verifyToken from "../middlewares/verifyToken.js";
@@ -21,7 +20,7 @@ postsRouter
 postsRouter
   .route("/:id")
   .get(getSinglePost)
-  .put(verifyToken, validateJOI(post), updatePost, listPost)
+  .put(verifyToken, validateJOI(post), updatePost)
   .delete(verifyToken, deletePost);
 
 export default postsRouter;
