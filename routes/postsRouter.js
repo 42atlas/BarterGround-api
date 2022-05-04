@@ -8,19 +8,21 @@ import {
 } from "../controllers/posts.js";
 import validateJOI from "../middlewares/validateJOI.js";
 import verifyToken from "../middlewares/verifyToken.js";
+import firebaseUploader from '../middlewares/firebaseUploader.js'
 import { post } from "../joi/schemas.js";
+
 
 const postsRouter = Router();
 
 postsRouter
   .route("/")
   .get(getAllPosts)
-  .post(verifyToken, validateJOI(post), createPost);
+  .post(verifyToken, firebaseUploader.single('image'), validateJOI(post), createPost);
 
 postsRouter
   .route("/:id")
   .get(getSinglePost)
-  .put(verifyToken, validateJOI(post), updatePost)
+  .put(verifyToken, firebaseUploader.single('image'), validateJOI(post), updatePost)
   .delete(verifyToken, deletePost);
 
 export default postsRouter;

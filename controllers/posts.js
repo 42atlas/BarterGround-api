@@ -9,13 +9,16 @@ export const getAllPosts = asyncHandler(async (req, res, next) => {
 
 export const createPost = asyncHandler(async (req, res) => {
   const {
-    body: { title, body, image, category },
+    body: { title, body, category },
+    file,
     user: { _id: author },
   } = req;
+
+  if (!file) throw new ErrorResponse(`Please upload an image for the item`, 400);
   let newPost = await Post.create({
     body,
     title,
-    image,
+    image: file.publicUrl,
     category,
     author,
     isListed: false,
@@ -36,10 +39,12 @@ export const getSinglePost = asyncHandler(async (req, res) => {
 
 export const updatePost = asyncHandler(async (req, res) => {
   const {
-    body: { title, body, image, category, isListed },
+    body: { title, body, category, isListed },
+    file,
     params: { id },
     user: { _id: userId },
   } = req;
+  if (!file) throw new ErrorResponse(`Please upload an image for the item`, 400);
   const found = await Post.findById(id);
   if (!found)
     throw new ErrorResponse(`Post with id of ${id} doesn't exist`, 404);
@@ -50,11 +55,11 @@ export const updatePost = asyncHandler(async (req, res) => {
     {
       title,
       body,
-      image,
+      image: file.publicUrl,
       category, isListed
     },
     { new: true }
-  );
+  ).populate('author');
   res.json(updatedPost);
 });
 
