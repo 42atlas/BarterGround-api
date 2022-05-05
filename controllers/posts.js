@@ -7,6 +7,12 @@ export const getAllPosts = asyncHandler(async (req, res, next) => {
   res.json(posts);
 });
 
+export const getPostsByUser = asyncHandler(async (req, res, next) => {
+  const { params: { userId } } = req
+  const posts = await Post.find({ author: userId })
+  res.json(posts);
+});
+
 export const createPost = asyncHandler(async (req, res) => {
   const {
     body: { title, body, category },
