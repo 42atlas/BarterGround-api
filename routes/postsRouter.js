@@ -3,6 +3,7 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getPostsByUser,
   getSinglePost,
   updatePost,
 } from "../controllers/posts.js";
@@ -24,5 +25,9 @@ postsRouter
   .get(getSinglePost)
   .put(verifyToken, firebaseUploader.single('image'), validateJOI(post), updatePost)
   .delete(verifyToken, deletePost);
+
+postsRouter
+  .route("/user/:userId")
+  .get(getPostsByUser)
 
 export default postsRouter;
