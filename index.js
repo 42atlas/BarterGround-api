@@ -6,21 +6,7 @@ import postsRouter from "./routes/postsRouter.js";
 import authRouter from "./routes/authRouter.js";
 import errorHandler from "./middlewares/errorHandler.js";
 /* import sessionAuth from "./routes/sessionAuth.js"; */
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
 
-// Set the configuration for your app
-// TODO: Replace with your app's config object
-const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  databaseURL: process.env.DATABASE_URL,
-  storageBucket: process.env.STORAGE_BUCKET
-};
-const firebaseApp = initializeApp(firebaseConfig);
-
-// Get a reference to the storage service, which is used to create references in your storage bucket
-const storage = getStorage(firebaseApp);
 
 
 const app = express();
