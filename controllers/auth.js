@@ -22,6 +22,20 @@ export const signUpUser = asyncHandler(async (req, res) => {
   res.status(201).json({ token });
 });
 
+export const updateUser = asyncHandler(async (req, res) => {
+  //Get JSON body from request [x]
+  const {
+    body: { name, email, password, character },
+  } = req;
+  //Check if the user already exists [x]
+  const found = await User.findOne({ email });
+  if (found) throw new ErrorResponse("Email already taken");
+  //Hash the password [x]
+  const hash = await bcrypt.hash(password, 5);
+  //Create a new user in the database [x]
+  await User.updateOne({ name, email, password: hash, character });
+});
+
 export const signInUser = asyncHandler(async (req, res) => {
   //Get JSON body from request [x]
   const {
