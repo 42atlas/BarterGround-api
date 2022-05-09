@@ -62,6 +62,7 @@ export const signUp = Joi.object({
 });
 
 export const update = Joi.object({
+  id: Joi.string(),
   name: Joi.string(),
   email: Joi.string().email(),
   password: Joi.string(),
