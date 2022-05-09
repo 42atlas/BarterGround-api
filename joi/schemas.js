@@ -1,5 +1,12 @@
 import Joi from "joi";
 
+export const offer = Joi.object({
+  product: Joi.any().required(),
+  offeredProducts: Joi.array().required(),
+  initiator: Joi.any().required(),
+  owner: Joi.any().required(),
+});
+
 export const post = Joi.object({
   title: Joi.string().required(),
   body: Joi.string().required(),
