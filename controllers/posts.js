@@ -68,25 +68,33 @@ export const updatePost = asyncHandler(async (req, res) => {
     params: { id },
     user: { _id: userId },
   } = req;
-
-  if (!file)
-    throw new ErrorResponse(`Please upload an image for the item`, 400);
   const found = await Post.findById(id);
   if (!found)
     throw new ErrorResponse(`Post with id of ${id} doesn't exist`, 404);
   if (found.author.toString() !== userId.toString())
     throw new ErrorResponse(`Only the owner of the post can edit`, 403);
-  const updatedPost = await Post.findOneAndUpdate(
-    { _id: id },
-    {
-      title,
-      body,
-      image: file.publicUrl,
-      category,
-      isListed,
-    },
-    { new: true }
-  ).populate("author");
+  const updatedPost = file
+    ? await Post.findOneAndUpdate(
+        { _id: id },
+        {
+          title,
+          body,
+          image: file && file.publicUrl,
+          category,
+          isListed,
+        },
+        { new: true }
+      ).populate("author")
+    : await Post.findOneAndUpdate(
+        { _id: id },
+        {
+          title,
+          body,
+          category,
+          isListed,
+        },
+        { new: true }
+      ).populate("author");
   res.json(updatedPost);
 });
 
