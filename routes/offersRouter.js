@@ -3,10 +3,12 @@ import {
   createOffer,
   getOffersSentByUser,
   getOffersReceivedByUser,
+  deleteOffer,
+  getOffer,
 } from "../controllers/offers.js";
 /* import validateJOI from "../middlewares/validateJOI.js"; */
 import verifyToken from "../middlewares/verifyToken.js";
-import { offer } from "../joi/schemas.js";
+/* import { offer } from "../joi/schemas.js"; */
 
 const offersRouter = Router();
 
@@ -16,10 +18,13 @@ offersRouter
 
 offersRouter
   .route("/sent")
-  .get(verifyToken, /* validateJOI(offer), */ getOffersSentByUser);
+  .get(verifyToken, /* validateJOI(offer), */ getOffersSentByUser)
+  .delete(verifyToken, deleteOffer);
 
 offersRouter
   .route("/received")
   .get(verifyToken, /* validateJOI(offer), */ getOffersReceivedByUser);
+
+offersRouter.route("/:id").get(getOffer);
 
 export default offersRouter;

@@ -7,6 +7,12 @@ export const offer = Joi.object({
   owner: Joi.any().required(),
 });
 
+export const message = Joi.object({
+  title: Joi.string().required(),
+  body: Joi.string().required(),
+  isListed: Joi.boolean(),
+});
+
 export const post = Joi.object({
   title: Joi.string().required(),
   body: Joi.string().required(),
