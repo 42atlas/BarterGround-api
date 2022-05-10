@@ -19,6 +19,9 @@ messagesRouter.route("/").get(getAllMessages).post(
 
 messagesRouter.route("/:id").delete(verifyToken, deleteMessage);
 
-messagesRouter.route("/user/:userId").get(getMessagesByUser);
+messagesRouter
+  .route("/user/:userId")
+  .get(getMessagesByUser)
+  .delete(verifyToken, deleteMessage);
 
 export default messagesRouter;

@@ -33,7 +33,7 @@ export const deleteOffer = asyncHandler(async (req, res) => {
   if (found.author.toString() !== userId.toString())
     throw new ErrorResponse(`Only the owner of the post can delete`, 403); */
   await Post.deleteOne({ _id: id });
-  res.json({ success: `Post with id of ${id} was deleted` });
+  res.json({ success: `Offer with id of ${id} was deleted` });
 });
 
 export const getOffer = asyncHandler(async (req, res, next) => {
