@@ -72,6 +72,7 @@ export const signUp = Joi.object({
       "Bard"
     )
     .required(),
+  newsletter: Joi.boolean(),
 });
 
 export const update = Joi.object({

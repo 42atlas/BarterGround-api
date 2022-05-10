@@ -32,9 +32,10 @@ export const createMessage = asyncHandler(async (req, res) => {
 export const deleteMessage = asyncHandler(async (req, res) => {
   const {
     params: { id },
-    user: { _id: userId },
+    /* user: { _id: userId }, */
   } = req;
   const found = await Message.findById(id);
+
   await Message.deleteOne({ _id: id });
   res.json({ success: `Message with id of ${id} was deleted` });
 });
