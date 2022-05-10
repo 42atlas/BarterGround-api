@@ -39,3 +39,18 @@ export const deleteMessage = asyncHandler(async (req, res) => {
   await Message.deleteOne({ _id: id });
   res.json({ success: `Message with id of ${id} was deleted` });
 });
+
+export const updateMessageByUser = asyncHandler(async (req, res, next) => {
+  const {
+    body: { message },
+  } = req;
+  try {
+    await Message.findOneAndUpdate(
+      { _id: message._id },
+      { title: message.title }
+    );
+    res.status(201).json({ data: "message updated successfully" });
+  } catch (err) {
+    res.status(500).json({ err: "Something went wrong " + err });
+  }
+});
