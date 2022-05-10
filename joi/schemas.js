@@ -79,7 +79,7 @@ export const update = Joi.object({
   id: Joi.string(),
   name: Joi.string(),
   email: Joi.string().email(),
-  password: Joi.string(),
+  password: Joi.string().allow(null, ""),
   character: Joi.string().valid(
     "OldMan",
     "OldLady",
