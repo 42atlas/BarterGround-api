@@ -4,10 +4,9 @@ import {
   getMessagesByUser,
   createMessage,
   deleteMessage,
+  updateMessageByUser,
 } from "../controllers/messages.js";
-/* import validateJOI from "../middlewares/validateJOI.js"; */
 import verifyToken from "../middlewares/verifyToken.js";
-import { message } from "../joi/schemas.js";
 
 const messagesRouter = Router();
 
@@ -22,6 +21,7 @@ messagesRouter.route("/:id").delete(verifyToken, deleteMessage);
 messagesRouter
   .route("/user/:userId")
   .get(getMessagesByUser)
+  .put(updateMessageByUser)
   .delete(verifyToken, deleteMessage);
 
 export default messagesRouter;
