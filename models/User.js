@@ -10,6 +10,7 @@ const userSchema = new Schema({
     select: false,
   },
   character: { type: String, required: [true, "Character is required"] },
+  newsletter: { type: Boolean },
 });
 
 export default model("User", userSchema);

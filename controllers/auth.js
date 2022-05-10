@@ -7,7 +7,7 @@ import User from "../models/User.js";
 export const signUpUser = asyncHandler(async (req, res) => {
   //Get JSON body from request [x]
   const {
-    body: { name, email, password, character },
+    body: { name, email, password, character, newsletter },
   } = req;
   //Check if the user already exists [x]
   const found = await User.findOne({ email });
@@ -15,7 +15,13 @@ export const signUpUser = asyncHandler(async (req, res) => {
   //Hash the password [x]
   const hash = await bcrypt.hash(password, 5);
   //Create a new user in the database [x]
-  const { _id } = await User.create({ name, email, password: hash, character });
+  const { _id } = await User.create({
+    name,
+    email,
+    password: hash,
+    character,
+    newsletter,
+  });
   //Sign a token (with the user id) [x]
   const token = jwt.sign({ _id }, process.env.JWT_SECRET);
   //Return token [x]
@@ -33,7 +39,7 @@ export const updateUser = asyncHandler(async (req, res) => {
     if (found) throw new ErrorResponse("Email already taken");
     //Hash the password [x]
     const hash = await bcrypt.hash(password, 5);
-    //Create a new user in the database [x]
+    //Update a user in the database [x]
     const result = await User.findByIdAndUpdate(id, {
       name,
       email,
