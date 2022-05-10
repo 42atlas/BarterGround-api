@@ -29,17 +29,23 @@ export const updateUser = asyncHandler(async (req, res) => {
   } = req;
   try {
     //Check if the user already exists [x]
-    const found = await User.findOne({ email });
-    if (found) throw new ErrorResponse("Email already taken");
+    // const found = await User.findOne({ email });
+    // if (found) throw new ErrorResponse("Email already taken");
     //Hash the password [x]
     const hash = await bcrypt.hash(password, 5);
     //Create a new user in the database [x]
-    const result = await User.findByIdAndUpdate(id, {
-      name,
-      email,
-      password: hash,
-      character,
-    });
+    const result = password
+      ? await User.findByIdAndUpdate(id, {
+          name,
+          email,
+          password: hash,
+          character,
+        })
+      : await User.findByIdAndUpdate(id, {
+          name,
+          email,
+          character,
+        });
     res.status(201).json({ result });
   } catch (err) {
     res.status(500).json({ err: "Something went wrong " + err });
@@ -64,5 +70,6 @@ export const signInUser = asyncHandler(async (req, res) => {
 });
 
 export const getUser = (req, res) => {
+  console.log(req.user);
   res.json(req.user);
 };
