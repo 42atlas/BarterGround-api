@@ -11,19 +11,20 @@ export const getMessagesByUser = asyncHandler(async (req, res, next) => {
   const {
     params: { userId },
   } = req;
-  const messages = await Message.find({ author: userId });
+  const messages = await Message.find({ receiver: userId });
   res.json(messages);
 });
 
 export const createMessage = asyncHandler(async (req, res) => {
   const {
+    params: { userId },
     body: { title, body },
     user: { _id: author },
   } = req;
   let newMessage = await Message.create({
     body,
     title,
-    author,
+    author, receiver: userId
   });
   newMessage = await newMessage.populate("author");
   res.status(201).json(newMessage);

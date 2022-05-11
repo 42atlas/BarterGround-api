@@ -41,7 +41,7 @@ export const getOffer = asyncHandler(async (req, res, next) => {
     params: { id },
     /* user: { initiator }, */
   } = req;
-  const found = await Offer.findById(id);
+  const found = await Offer.findById(id).populate('offeredProducts');
 
   res.json(found);
 });
