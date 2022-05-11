@@ -32,7 +32,7 @@ export const deleteOffer = asyncHandler(async (req, res) => {
     throw new ErrorResponse(`Offer with id of ${id} doesn't exist`, 404);
   if (found.author.toString() !== userId.toString())
     throw new ErrorResponse(`Only the owner of the post can delete`, 403); */
-  await Post.deleteOne({ _id: id });
+  await Offer.deleteOne({ _id: id });
   res.json({ success: `Offer with id of ${id} was deleted` });
 });
 

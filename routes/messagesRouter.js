@@ -22,6 +22,11 @@ messagesRouter
   .route("/user/:userId")
   .get(getMessagesByUser)
   .put(updateMessageByUser)
-  .delete(verifyToken, deleteMessage);
+  .delete(verifyToken, deleteMessage)
+  .post(
+    verifyToken,
+    /* validateJOI(message), */
+    createMessage
+  );
 
 export default messagesRouter;
