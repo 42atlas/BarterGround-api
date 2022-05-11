@@ -8,6 +8,11 @@ const messageSchema = new Schema({
     ref: "User",
     required: [true, "Author is required"],
   },
+  receiver: {
+    type: ObjectId,
+    ref: "User",
+    required: [true, "Receiver is required"],
+  },
   body: { type: String, required: [true, "Body is required"] },
   date: { type: Date, default: Date.now },
 });
