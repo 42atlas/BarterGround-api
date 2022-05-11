@@ -18,13 +18,12 @@ offersRouter
 
 offersRouter
   .route("/sent")
-  .get(verifyToken, /* validateJOI(offer), */ getOffersSentByUser)
-  .delete(verifyToken, deleteOffer);
+  .get(verifyToken, /* validateJOI(offer), */ getOffersSentByUser);
 
 offersRouter
   .route("/received")
   .get(verifyToken, /* validateJOI(offer), */ getOffersReceivedByUser);
 
-offersRouter.route("/:id").get(getOffer);
+offersRouter.route("/:id").get(getOffer).delete(verifyToken, deleteOffer);
 
 export default offersRouter;
