@@ -1,6 +1,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
 import Message from "../models/Message.js";
+import jwt from "jsonwebtoken";
 
 export const getAllMessages = asyncHandler(async (req, res, next) => {
   const messages = await Message.find().populate("author");
@@ -21,13 +22,33 @@ export const createMessage = asyncHandler(async (req, res) => {
     body: { title, body },
     user: { _id: author },
   } = req;
+
   let newMessage = await Message.create({
     body,
     title,
-    author, receiver: userId
+    author,
+    receiver: userId,
   });
   newMessage = await newMessage.populate("author");
   res.status(201).json(newMessage);
+});
+
+export const updateMessage = asyncHandler(async (req, res) => {
+  const {
+    params: { id },
+    body: { title, body },
+    user: { _id: userId },
+  } = req;
+  const updateMessage = await Message.findOneAndUpdate(
+    {
+      body,
+      title,
+      receiver: userId,
+    },
+    { _id: id },
+    { new: true }
+  ).populate("author");
+  res.json(updateMessage);
 });
 
 export const deleteMessage = asyncHandler(async (req, res) => {
@@ -54,4 +75,34 @@ export const updateMessageByUser = asyncHandler(async (req, res, next) => {
   } catch (err) {
     res.status(500).json({ err: "Something went wrong " + err });
   }
+});
+
+export const getMessagesReceivedByUser = asyncHandler(
+  async (req, res, next) => {
+    const { user } = req;
+    const messagesByUser = await Message.find({ receiver: user._id }).populate(
+      "title",
+      "body"
+    );
+    res.json(messagesByUser);
+  }
+);
+
+export const getMessagesSentByUser = asyncHandler(async (req, res, next) => {
+  const { user } = req;
+  const messagesByUser = await Message.find({ author: user._id }).populate(
+    "title",
+    "body"
+  );
+  res.json(messagesByUser);
+});
+
+export const getSingleMessage = asyncHandler(async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const message = await Message.findById(id).populate("author");
+  if (!message)
+    throw new ErrorResponse(`Message with id of ${id} doesn't exist`, 404);
+  res.send(message);
 });
