@@ -5,8 +5,14 @@ import {
   createMessage,
   deleteMessage,
   updateMessageByUser,
+  getMessagesReceivedByUser,
+  getMessagesSentByUser,
+  updateMessage,
+  getSingleMessage,
 } from "../controllers/messages.js";
 import verifyToken from "../middlewares/verifyToken.js";
+import validateJOI from "../middlewares/validateJOI.js";
+import { message } from "../joi/schemas.js";
 
 const messagesRouter = Router();
 
@@ -17,6 +23,20 @@ messagesRouter.route("/").get(getAllMessages).post(
 );
 
 messagesRouter.route("/:id").delete(verifyToken, deleteMessage);
+
+messagesRouter.route("/message/:id").get(getSingleMessage).put(
+  verifyToken,
+  /* validateJOI(message), */
+  updateMessage
+);
+
+messagesRouter
+  .route("/received")
+  .get(verifyToken, /* validateJOI(offer), */ getMessagesReceivedByUser);
+
+messagesRouter
+  .route("/sent")
+  .get(verifyToken, /* validateJOI(offer), */ getMessagesSentByUser);
 
 messagesRouter
   .route("/user/:userId")

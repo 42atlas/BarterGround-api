@@ -51,16 +51,6 @@ export const createPost = asyncHandler(async (req, res) => {
   res.status(201).json(newPost);
 });
 
-export const getSinglePost = asyncHandler(async (req, res) => {
-  const {
-    params: { id },
-  } = req;
-  const post = await Post.findById(id).populate("author");
-  if (!post)
-    throw new ErrorResponse(`Post with id of ${id} doesn't exist`, 404);
-  res.send(post);
-});
-
 export const updatePost = asyncHandler(async (req, res) => {
   const {
     body: { title, body, category, isListed },
@@ -96,6 +86,16 @@ export const updatePost = asyncHandler(async (req, res) => {
         { new: true }
       ).populate("author");
   res.json(updatedPost);
+});
+
+export const getSinglePost = asyncHandler(async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const post = await Post.findById(id).populate("author");
+  if (!post)
+    throw new ErrorResponse(`Post with id of ${id} doesn't exist`, 404);
+  res.send(post);
 });
 
 export const deletePost = asyncHandler(async (req, res) => {
