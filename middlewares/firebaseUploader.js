@@ -6,7 +6,7 @@ const firebaseUploader = multer({
   storage: FirebaseStorage({
     bucketName: process.env.STORAGE_BUCKET_FIREBASE,
     credentials: {
-      privateKey: process.env.PRIVATE_KEY_FIREBASE,
+      privateKey: process.env.PRIVATE_KEY_FIREBASE ? process.env.PRIVATE_KEY_FIREBASE.replace(/\\n/g, '\n') : undefined,
       project_id: process.env.PROJECT_ID_FIREBASE,
       client_email: process.env.CLIENT_EMAIL_FIREBASE,
     },
