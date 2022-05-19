@@ -36,16 +36,18 @@ export const createMessage = asyncHandler(async (req, res) => {
 export const updateMessage = asyncHandler(async (req, res) => {
   const {
     params: { id },
-    body: { title, body },
+    body: { data },
     user: { _id: userId },
   } = req;
+
+  console.log("data", JSON.parse(data));
+  const formattedData = JSON.parse(data);
   const updateMessage = await Message.findOneAndUpdate(
+    { _id: id },
     {
-      body,
-      title,
+      body: formattedData.subject,
       receiver: userId,
     },
-    { _id: id },
     { new: true }
   ).populate("author");
   res.json(updateMessage);
