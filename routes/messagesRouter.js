@@ -22,13 +22,13 @@ messagesRouter.route("/").get(getAllMessages).post(
   createMessage
 );
 
-messagesRouter.route("/:id").delete(verifyToken, deleteMessage);
-
-messagesRouter.route("/message/:id").get(getSingleMessage).put(
+messagesRouter.route("/:id").delete(verifyToken, deleteMessage).put(
   verifyToken,
   /* validateJOI(message), */
   updateMessage
 );
+
+messagesRouter.route("/message/:id").get(getSingleMessage);
 
 messagesRouter
   .route("/received")
