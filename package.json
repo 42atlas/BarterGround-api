@@ -1,35 +1,35 @@
 {
-    "name": "barterground-api",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {
-        "dev": "nodemon -r dotenv/config.js index.js",
-        "start": "node index.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "bcrypt": "^5.0.1",
-        "cors": "^2.8.5",
-        "express": "^4.18.1",
-        "express-session": "^1.17.2",
-        "firebase": "^9.7.0",
-        "joi": "^17.6.0",
-        "jsonwebtoken": "^8.5.1",
-        "mongoose": "^6.3.2",
-        "morgan": "^1.10.0",
-        "multer": "^1.4.4",
-        "multer-firebase-storage": "^3.0.3",
-        "uuid": "^8.3.2"
-    },
-    "devDependencies": {
-        "@types/bcrypt": "^5.0.0",
-        "@types/jsonwebtoken": "^8.5.8",
-        "dotenv": "^16.0.0",
-        "kill-port": "^1.6.1",
-        "nodemon": "^2.0.15"
-    }
+  "name": "barterground-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config.js index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-session": "^1.17.2",
+    "firebase": "^9.7.0",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "multer-firebase-storage": "^3.0.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.8",
+    "dotenv": "^16.0.0",
+    "kill-port": "^1.6.1",
+    "nodemon": "^2.0.15"
+  }
 }
