@@ -11,7 +11,7 @@ const messageSchema = new Schema({
   receiver: {
     type: ObjectId,
     ref: "User",
-    required: [true, "Receiver is required"],
+    /* required: [true, "Receiver is required"], */
   },
   body: { type: String, required: [true, "Body is required"] },
   date: { type: Date, default: Date.now },
