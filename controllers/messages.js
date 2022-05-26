@@ -33,27 +33,6 @@ export const createMessage = asyncHandler(async (req, res) => {
   res.status(201).json(newMessage);
 });
 
-/* export const updateMessage = asyncHandler(async (req, res) => {
-  const {
-    params: { id },
-    body: { data },
-    user: { _id: userId },
-  } = req;
-
-  console.log("data", JSON.parse(data));
-  const formattedData = JSON.parse(data);
-  const updateMessage = await Message.findOneAndUpdate(
-    { _id: id },
-    {
-      body: formattedData.subject,
-      receiver: userId,
-    },
-    { new: true }
-  ).populate("author");
-  res.json(updateMessage);
-}); */
-
-//New Try
 export const updateMessage = asyncHandler(async (req, res) => {
   const {
     params: { id },
@@ -81,8 +60,6 @@ export const updateMessage = asyncHandler(async (req, res) => {
   });
   return res.status(201).send({ newMessage });
 });
-
-//
 
 export const deleteMessage = asyncHandler(async (req, res) => {
   const {
@@ -113,20 +90,21 @@ export const updateMessageByUser = asyncHandler(async (req, res, next) => {
 export const getMessagesReceivedByUser = asyncHandler(
   async (req, res, next) => {
     const { user } = req;
-    const messagesReceivedByUser = await Message.find({
-      receiver: user._id,
-    }).populate("title", "body");
-    res.json(messagesReceivedByUser);
+    const messagesByUser = await Message.find({ receiver: user._id }).populate(
+      "title",
+      "body"
+    );
+    res.json(messagesByUser);
   }
 );
 
 export const getMessagesSentByUser = asyncHandler(async (req, res, next) => {
   const { user } = req;
-  const messagesSentByUser = await Message.find({ author: user._id }).populate(
+  const messagesByUser = await Message.find({ author: user._id }).populate(
     "title",
     "body"
   );
-  res.json(messagesSentByUser);
+  res.json(messagesByUser);
 });
 
 export const getSingleMessage = asyncHandler(async (req, res) => {
